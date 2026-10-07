@@ -30,35 +30,75 @@ package main
 
 // Langkah 4: server yang melayani terus
 
-import (
-	"io"
-	"log"
-	"net"
-)
+// import (
+// 	"io"
+// 	"log"
+// 	"net"
+// )
 
-func main() {
-	ln, err := net.Listen("tcp", ":9001")
-	if err != nil {
-		log.Fatal("Gagal membuka Port 9001:", err)
-	}
-	defer ln.Close()
-	log.Println("server echo mendengarkan di port 9001")
+// func main() {
+// 	ln, err := net.Listen("tcp", ":9001")
+// 	if err != nil {
+// 		log.Fatal("Gagal membuka Port 9001:", err)
+// 	}
+// 	defer ln.Close()
+// 	log.Println("server echo mendengarkan di port 9001")
 
-	for {
-		conn, err := ln.Accept()
-		if err != nil {
-			log.Println("gagal menerima sambungan: ", err)
-			continue
-		}
-		alamat := conn.RemoteAddr().String()
-		log.Println("klien tersambung:", alamat)
+// 	for {
+// 		conn, err := ln.Accept()
+// 		if err != nil {
+// 			log.Println("gagal menerima sambungan: ", err)
+// 			continue
+// 		}
+// 		alamat := conn.RemoteAddr().String()
+// 		log.Println("klien tersambung:", alamat)
 
-		io.Copy(conn, conn)
+// 		io.Copy(conn, conn)
 
-		conn.Close()
-		log.Println("Klien terputus, server selesai")
-	}
-}
+// 		conn.Close()
+// 		log.Println("Klien terputus, server selesai")
+// 	}
+// }
+
+// Langkah 5: membaca per baris dan mencatat log pesan
+
+// import (
+// 	"bufio"
+// 	"fmt"
+// 	"log"
+// 	"net"
+// )
+
+// func main () {
+// 	ln, err := net.Listen("tcp", ":9001")
+// 	if err != nil {
+// 		log.Fatal("Gagal membuka Port 9001:", err)
+// 	}
+// 	defer ln.Close()
+// 	log.Println("server echo mendengarkan di port 9001")
+
+// 	for {
+// 		conn, err := ln.Accept()
+// 		if err != nil {
+// 			log.Println("gagal menerima sambungan:", err)
+// 			continue
+// 		}
+// 		alamat := conn.RemoteAddr().String()
+// 		log.Println("klien tersambung:", alamat)
+
+// 		scanner := bufio.NewScanner(conn)
+// 		for scanner.Scan() {
+// 			baris := scanner.Text()
+// 			log.Printf("dari %s: %q", alamat, baris)
+// 			if _, err := fmt.Fprintf(conn, "%s\n", baris); err != nil {
+// 				log.Println("gagal mengirim ke", alamat, err)
+// 				break
+// 			}
+// 		}
+// 		conn.Close()
+// 		log.Println("klien Terputus:", alamat)
+// 	}
+// }
 
 // Langkah 8: Melayani Banyak Klien dengan Goroutine
 
